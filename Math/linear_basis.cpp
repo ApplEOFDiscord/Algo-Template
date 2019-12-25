@@ -42,7 +42,7 @@ ll query_min()
     return 0;
 }
 
-//把线性基进一步正交化,方便询问第k小
+//相当于把Gauss消元改为Gauss-Jordan消元,方便询问第k小
 void rebuild()
 {
     for(int i=60;i>=0;i--){
