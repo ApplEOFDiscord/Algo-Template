@@ -21,10 +21,11 @@ int gauss(int n,int m)
             a[r][c]=0,c++;continue;
         }
         
-        //逆序枚举j避免使用中间变量(double t=a[i][c]/a[r][c];)带来的精度损失
-        for(int j=m+1;j>=r;j--)
-            for(int i=r+1;i<=n;i++)
-                a[i][j]-=a[i][c]/a[r][c]*a[r][j];
+        for(int i=r+1;i<=n;i++)
+            if(sgn(a[i][c])){ //a[i][c]非零时才进行相消，系数矩阵稀疏时能提升些速度
+                //逆序枚举j避免使用中间变量(double t=a[i][c]/a[r][c];)带来的精度损失
+                for(int j=m+1;j>=r;j--) a[i][j]-=a[i][c]/a[r][c]*a[r][j];
+            }
         r++,c++;
     }
     for(int i=r;i<=n;i++)
