@@ -16,7 +16,7 @@ struct edge
 };
 vector<edge> all;
 
-void addedge(int u,int v,int cap,int flow,int cost)
+void addedge(int u,int v,int cap,int cost)
 {
     all.push_back(edge{u,v,cap,0,cost});
     all.push_back(edge{v,u,0,0,-cost});
