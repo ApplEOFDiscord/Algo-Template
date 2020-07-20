@@ -1,11 +1,11 @@
 #include<bits/stdc++.h>
+#define LL long long
 using namespace std;
 
-typedef long long ll;
-ll b[65],newb[65],cnt;
+LL b[65],newb[65],cnt;
 bool flag;
 
-void insert(ll x)
+void insert(LL *b,LL x)
 {
     for(int i=60;i>=0;i--)
         if(x&(1LL<<i)){
@@ -17,7 +17,7 @@ void insert(ll x)
     flag=true;
 }
 
-bool check(ll x)
+bool check(LL *b,LL x)
 {
     for(int i=60;i>=0;i--)
         if(x&(1LL<<i)){
@@ -27,14 +27,14 @@ bool check(ll x)
     return true;
 }
 
-ll query_max()
+LL query_max(LL *b)
 {
-    ll res=0;
+    LL res=0;
     for(int i=60;i>=0;i--) res=max(res,res^b[i]);
     return res;
 }
 
-ll query_min()
+LL query_min(LL *b)
 {
     if(flag) return 0; //可以异或出0
     for(int i=0;i<=60;i++)
@@ -43,7 +43,7 @@ ll query_min()
 }
 
 //相当于把Gauss消元改为Gauss-Jordan消元,方便询问第k小
-void rebuild()
+void rebuild(LL *b,LL *newb)
 {
     for(int i=60;i>=0;i--){
         if(!b[i]) continue;
@@ -54,14 +54,41 @@ void rebuild()
         if(b[i]) newb[cnt++]=b[i];
 }
 
-ll query_kth(ll k)
+LL query_kth(LL *newb,LL k)
 {
-    ll res=0;
+    LL res=0;
     if(flag) k--;
     if(!k) return 0;
     if(k>=(1LL<<cnt)) return -1;
     for(int i=0;i<=60;i++)
         if(k&(1LL<<i)) res^=newb[i];
     return res;
+}
+
+LL all[65],mask[65];
+
+//线性基求交
+void intersect(LL *a,LL *b,LL *c)
+{
+    for(int i=0;i<32;i++) all[i]=a[i],mask[i]=(1LL<<i);
+    for(int i=0;i<32;i++)
+        if(b[i]){
+            LL x=b[i],k=0;
+            bool flag=true;
+            for(int j=31;j>=0;j--)
+                if(x&(1LL<<j)){
+                    if(!all[j]){
+                        all[j]=x,mask[j]=k;
+                        flag=false;break;
+                    }
+                    x^=all[j],k^=mask[j];
+                }
+            if(flag){
+                LL x=0;
+                for(int j=0;j<32;j++)
+                    if(k&(1LL<<j)) x^=a[j];
+                insert(c,x);
+            }
+        }
 }
 
