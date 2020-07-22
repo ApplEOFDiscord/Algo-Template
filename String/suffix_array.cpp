@@ -3,6 +3,7 @@ using namespace std;
 
 const int maxn=1e6+10;
 int sa[maxn],x[maxn],y[maxn],cnt[maxn];
+int h[maxn],rk[maxn];
 
 void get_sa(string &s,int m)
 {
@@ -25,5 +26,18 @@ void get_sa(string &s,int m)
             x[sa[i]]=y[sa[i-1]]==y[sa[i]]&&y[sa[i-1]+k]==y[sa[i]+k]?p-1:p++;
         if(p>=n) break;
         m=p;
+    }
+}
+
+void get_height(string &s)
+{
+    int n=s.size();
+    for(int i=0;i<n;i++) rk[sa[i]]=i;
+    int k=0;
+    for(int i=0;i<n;i++){
+        if(k) k--;
+        int j=sa[rk[i]-1];
+        while(s[i+k]==s[j+k]) k++;
+        h[rk[i]]=k;
     }
 }
