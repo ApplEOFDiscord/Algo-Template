@@ -43,7 +43,7 @@ void bm(LL *a,int n,vector<LL> &coef)
 LL calc(LL *a,LL n,vector<LL> &coef)
 {
     int tot=coef.size();
-    if(n<=tot) return a[n];
+    if(n<=tot) return a[n+1];
     static LL f[maxn],g[maxn],p[maxn],temp[maxn];
     p[0]=-1;
     for(int i=1;i<=tot;i++) p[i]=coef[i-1];
