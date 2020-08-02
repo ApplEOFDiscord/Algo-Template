@@ -27,14 +27,8 @@ void fwt_xor(LL *a,int flag)
     for(int i=2;i<=n;i<<=1)
         for(int j=0;j<n;j+=i)
             for(int k=j;k<j+i/2;k++){
-               LL temp=a[k];
-               if(flag==1){
-                   a[k]+=a[k+i/2],a[k]%=mod;
-                   a[k+i/2]-=temp,a[k+i/2]=(a[k+i/2]+mod)%mod;
-               }
-               else{
-                   a[k]=(a[k]+a[k+i/2])*inv2%mod;
-                   a[k+i/2]=(temp-a[k+i/2]+mod)*inv2%mod;
-               }
+               LL op1=a[k],op2=a[k+i/2];
+               a[k]=(op1+op2)%mod,a[k+i/2]=(op1-op2+mod)%mod;
+               if(flag==-1) a[k]=a[k]*inv2%mod,a[k+i/2]=a[k+i/2]*inv2%mod;
             }
 }
