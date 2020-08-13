@@ -18,6 +18,7 @@ void dijkstra(int n,int s)
         P x=q.top();q.pop();
         int u=x.second;
         if(vis[u]) continue;
+        vis[u]=1;
         for(auto e:g[u]){
             int v=e.first,w=e.second;
             if(d[u]+w<d[v]){
