@@ -87,7 +87,7 @@ LL pollard_rho(LL x)
     return x;
 }
 
-vector<int> fac;
+vector<LL> fac;
 
 void get_fac(LL x)
 {
