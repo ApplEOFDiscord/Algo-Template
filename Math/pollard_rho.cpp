@@ -2,7 +2,7 @@
 #define LL long long
 using namespace std;
 
-int pri[5]={2,3,5,7,11};
+LL test[7]={2,325,9375,28178,450775,9780504,1795265022};
 
 /*
 LL quickmul(LL a,LL b,LL mod)
@@ -38,8 +38,8 @@ bool miller_rabin(LL x)
     if(x<2||!(x&1)) return false;
     LL s=0,t=x-1;
     while(!(t&1)) s++,t>>=1;
-    for(int i=0;i<5&&pri[i]<x;i++){
-        LL pre=quickpow(pri[i],t,x);
+    for(int i=0;i<7&&test[i]<x;i++){
+        LL pre=quickpow(test[i],t,x);
         for(int j=1;j<=s;j++){
             LL now=quickmul(pre,pre,x);
             if(now==1&&pre!=1&&pre!=x-1) return false;
@@ -61,19 +61,30 @@ inline LL f(LL x,LL c,LL n)
     return (quickmul(x,x,n)+c)%n;
 }
 
+mt19937 mt(time(0));
+
+inline LL get_rand(LL x,LL y)
+{
+    return uniform_int_distribution<LL>(x,y)(mt);
+}
+
 LL pollard_rho(LL x)
 {
-    LL p=0,q=0,c=1LL*rand()%(x-1)+1;
-    for(int lim=1;;lim=min(128,lim<<1),p=q){
+    if(x==4) return 2;
+    LL p=get_rand(1,x-1),q=p,c=get_rand(1,x-1);
+    p=f(p,c,x),q=f(f(q,c,x),c,x);
+    for(int lim=1;p!=q;lim=min(128,lim<<1)){
         LL now=1;
         for(int i=0;i<lim;i++){
-            q=f(q,c,x);
-            now=now*abs(q-p)%x;
-            if(!now) return x;
+            LL temp=quickmul(now,abs(q-p),x);
+            if(!temp) break;
+            now=temp;
+            p=f(p,c,x),q=f(f(q,c,x),c,x);
         }
         LL d=gcd(now,x);
         if(d>1) return d;
     }
+    return x;
 }
 
 vector<int> fac;
