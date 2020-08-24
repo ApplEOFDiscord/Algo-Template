@@ -2,7 +2,10 @@
 #define LL long long
 using namespace std;
 
-int pri[5]={2,3,5,7,11};
+/*
+int test[3]={2,7,61};  int范围内使用
+*/
+LL test[7]={2,325,9375,28178,450775,9780504,1795265022};
 
 LL quickmul(LL a,LL b,LL mod)
 {
@@ -32,8 +35,8 @@ bool miller_rabin(LL x)
     if(x<2||!(x&1)) return false;
     LL s=0,t=x-1;
     while(!(t&1)) s++,t>>=1;
-    for(int i=0;i<5&&pri[i]<x;i++){
-        LL pre=quickpow(pri[i],t,x);
+    for(int i=0;i<7&&test[i]<x;i++){
+        LL pre=quickpow(test[i],t,x);
         for(int j=1;j<=s;j++){
             LL now=quickmul(pre,pre,x);
             if(now==1&&pre!=1&&pre!=x-1) return false;
