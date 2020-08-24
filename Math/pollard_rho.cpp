@@ -16,9 +16,9 @@ LL quickmul(LL a,LL b,LL mod)
     return res;
 }*/
 
-inline LL quickmul(LL a,LL b,LL mod)
-{
-    return (a*b-(LL)((long double)a*b/mod+1e-9)*mod)%mod;
+inline LL quickmul(LL x,LL y,LL mod){
+    LL res=(x*y-(LL)((long double)x*y/mod+1e-9)*mod)%mod;
+    return res<0?res+mod:res;
 }
 
 LL quickpow(LL a,LL x,LL mod)
